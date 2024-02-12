@@ -70,7 +70,7 @@ export default function Home(){
                                                 return(
                                                 <tr className="bg-red-900" key={el.id}>
                                                     <td>{el.id}</td>
-                                                    <td><img src={el.imgUrl} alt="" className="avatar h-40" /></td>
+                                                    <td><img src={el.imgUrl} alt="" className="avatar " /></td>
                                                     <td>{el.name}</td>
                                                     <td>{el.description}</td>
                                                     <td>

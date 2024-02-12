@@ -12,17 +12,20 @@ export default function EditImage(){
     const [categories,setCategories] = useState([])
     const [file,setFile] = useState('')
     let token = sessionStorage.access_token
+    let formData = new FormData()
 
-
+    
     function changeValue(e){
         let value = e.target.files[0]
-        setFile({file:value})
+        console.log(value);
+        formData.append('file',value)
     }
     let {id} = useParams()
     async function submitData(e){
         try {
             e.preventDefault()
-                const {data} = await axios.patch(`${url}/apis/restaurant-app/cuisines/${id}`,file,{ headers: {"Authorization" : `Bearer ${token}`} }) 
+            // console.log(formData,file,file.name);
+                const {data} = await axios.patch(`${url}/apis/restaurant-app/cuisines/${id}`,formData,{ headers: {"Authorization" : `Bearer ${token}`} }) 
                 Swal.fire({
                     title: "Succeed in edting image!",
                     text: data.message,
@@ -30,10 +33,11 @@ export default function EditImage(){
                   });
                 navigate('/')
         } catch (error) {
+            console.log(error);
             Swal.fire({
                 icon: "error",
                 title: "Error!",
-                text: error.response.data.error,
+                text: error.response,
               });
         }
     }
