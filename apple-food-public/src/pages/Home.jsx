@@ -14,10 +14,12 @@ export default function Home(){
     const [limit,setLimit] = useState(4)
     const [page,setPage] = useState(1)
     const [totalPage, setTP] = useState(10)
+    const [sort,setSort] = useState('ASC')
+
     async function fetchCuisines(){
         try {
             setLoading(true)
-            const { data } = await axios.get(`${url}/apis/pub/restaurant-app/cuisines?q=${search}&i=&limit=${limit}&page=${page}&sort=ASC`);
+            const { data } = await axios.get(`${url}/apis/pub/restaurant-app/cuisines?q=${search}&i=&limit=${limit}&page=${page}&sort=${sort}`);
             setTP(data.data.pagination.totalPage)
             setCuisines(data.data.query)
         } catch (error) {
@@ -35,7 +37,7 @@ export default function Home(){
     useEffect(() => {
         fetchCuisines();
         console.log(page);
-    }, [search,limit,page])
+    }, [search,limit,page,sort])
 
     useEffect(() => {
         fetchCuisines();
@@ -68,6 +70,11 @@ export default function Home(){
                                     <option value="10">10</option>
                                     <option value="12">12</option>
                                 </select>
+                                <div>
+                                    <button className={sort != "ASC" ? `btn btn-primary`:`btn btn-disabled`} onClick={()=>{setSort('ASC')}}>ASC</button>
+                                    <button className={sort != "DESC" ? `btn btn-primary`:`btn btn-disabled`} onClick={()=>{setSort('DESC')}}>DESC</button>
+
+                                </div>
                                 </div>
                             </div>
                             <div className="basis-10/12 w-full h-full "> 
